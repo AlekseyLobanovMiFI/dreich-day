@@ -1,0 +1,22 @@
+Iteration 2, part 1: DAILY TASKS. Add a goal layer on top of the existing game. Keep all existing mechanics, rules, visuals and UI as they are.
+
+TASK SYSTEM
+- At 6:00 each loop, pick ONE task from the pool below. Only pick tasks that are achievable with today's hidden conditions (check them against weatherMorning/weatherAfternoon/event before choosing). Prefer tasks the player has not completed yet.
+- Show the task in the morning newspaper as an ad ("Объявления") and in a small panel at the top-right of the screen: who asks, what is needed, deadline, status (в процессе / выполнено / провалено).
+- Check the condition continuously until the deadline. On success: toast "Задание выполнено!", the requester gets +15 mood, and the player gets a reward (below). On failure at the deadline: toast "Задание провалено", requester -5 mood.
+
+TASK POOL (requester — text — condition — deadline)
+1. Fergus — "Скучно в пабе. Пусть Хэмиш заглянет до полудня." — Hamish is inside the pub at any moment before 12:00 — 12:00
+2. Morag — "Хочу торговать на свежем воздухе." — Morag's outdoor tables are out at 12:30 and weatherAfternoon is not rain — 12:30
+3. Hamish — "Нужен улов к обеду." — Hamish stays on the pier until 12:00 (no early leave) — 12:00
+4. Fergus — "Деревне нужен хороший день." — all three NPCs have mood >= 66 at the same moment before 17:00 — 17:00
+5. Elspeth's newspaper (no NPC needed) — "Честное слово синоптика." — the forecast came true AND at least two NPCs have mood >= 66 at 17:00 — 17:00
+
+REWARD
+The first time a task is completed, reveal a HINT for one undiscovered rule in the journal (a vague one-line clue replacing "???", e.g. "??? — Мораг как-то связана с дождём"). Completed tasks persist across loops (save with the journal in localStorage).
+
+JOURNAL
+Add a "Задания" section: list all 5 tasks, completed ones with a check mark, unknown ones as "???" until they have appeared at least once. Show progress "Задания: 2/5" at the top of the journal.
+
+DAY SUMMARY
+Add the task result to the end-of-day summary screen.

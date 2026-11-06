@@ -1,0 +1,83 @@
+You are an expert HTML5 game developer. Build iteration 1 of "Dreich Day", a cozy top-down pixel-art time-loop game, as a single self-contained HTML file (Canvas 2D + vanilla JavaScript, no external images or libraries; draw all pixel art procedurally with small rectangles on a 16x16 tile grid, scaled x3, crisp pixels).
+
+ALL UI TEXT AND DIALOGUE MUST BE IN RUSSIAN. Character and place names stay Scottish.
+
+SETTING
+Glen Dreich, a small village in the Scottish Highlands, on St Brigid's Day (1 February). See ART DIRECTION below. Oliver Overcast, a cynical London weatherman, is stuck in a time loop: the same day repeats, but its conditions are re-rolled every loop.
+
+ART DIRECTION
+Style: cozy top-down pixel art in the spirit of classic farming-sim games (chunky readable sprites, 1px dark outlines, soft shading with 2-3 tones per material), but with its own twist: a grey, misty Highland day where WARM LIGHT is the accent. Windows of the pub and houses glow amber, lanterns and chimney smoke give life to the cold scene. Scottish details: purple heather patches on the hills, mossy dry-stone walls, tartan accents on clothes.
+Use ONLY this palette:
+- outline / ink #2B2A33
+- stone dark #4A4E57, stone light #8C8F94
+- slate roof #5B6672
+- grass dark #4E6B3A, grass #7A9A4F
+- heather #8E6A9E
+- loch water #3E5C70
+- mist / sky #C9D1D3
+- dirt path #8A6F4E
+- warm light #F2B95E
+- tartan red #A33B3B
+- skin #E8C2A0
+Weather changes the mood with a full-screen tint: sun = slight golden tint, rain = darker and bluer, fog = desaturated with a light mist overlay, wind = normal colours with moving grass.
+
+MAP (one scrolling map, about 40x30 tiles, camera follows the player)
+- Pub "The Adder's Rest" with Oliver's bed inside (player spawn)
+- Village square with Nathair's burrow (a small mound with a hole)
+- Newspaper office "Glen Dreich Gazette"
+- Bakery, Morag's house
+- Pier on the loch (water is not walkable)
+- Dirt paths connecting everything, fences, a few trees
+
+CONTROLS
+WASD/arrows move, E interact, J open/close the journal, Esc close windows.
+
+TIME
+The day runs 6:00-18:00, 1 in-game hour = 50 real seconds. HUD top-left: time, loop number ("Петля 3"), current weather icon.
+
+DAY CONDITIONS (rolled at 6:00 every loop)
+- weatherMorning and weatherAfternoon: each one of sun, rain, fog, wind (equal chance; afternoon = morning with 50% chance)
+- nathairSign, depends on weatherAfternoon with 70% accuracy: sun -> "emerged", rain -> "stayed in burrow", fog -> "peeked and hid", wind -> random
+- event: "fair" (30%) or "none"
+- every NPC starting mood: random 40-70
+Weather is visible: rain particles, fog overlay, swaying grass in wind, brighter tint in sun. Weather switches at 12:00.
+
+MORNING RITUAL
+At 7:00 villagers gather at the square, a short animation shows the adder Nathair according to nathairSign, and a caption explains the sign in Russian.
+
+FORECAST
+Interacting with the desk in the newspaper office before 9:00 opens a window "Прогноз на сегодня" with 4 buttons: Солнце / Дождь / Туман / Ветер. Store it as forecast. If not chosen by 9:00, forecast = none. At 12:00 compare forecast with weatherAfternoon: correct -> +10 mood to every NPC; wrong -> -10 mood to every NPC; show a short notification.
+
+NPCS
+Each NPC has a base schedule and hidden rules. Store rules as data, e.g.
+{ id, npc, when: (state) => boolean, effect: { location?, from?, to?, moodDelta? }, journalText }
+so that more NPCs and rules can be added later without rewriting the engine. Rules override the base schedule. NPCs walk between locations along paths at walking speed. A mood icon floats above each NPC (happy / neutral / sad by mood thresholds 66/33).
+
+1. Morag Bannock, baker. Base: bakery 7:00-15:00, home 15:00-18:00.
+   Rule M1: if weatherMorning is rain -> stays home until 12:00 (bakery closed).
+   Rule M2: if forecast is sun -> at 12:00 she puts tables outside the bakery; if weatherAfternoon is rain at that moment -> mood -20.
+2. Hamish Haddock, fisherman. Base: pier 6:00-12:00, pub 12:00-18:00.
+   Rule H1: if forecast is rain or wind -> skips fishing and sits in the pub from 8:00.
+   Rule H2: if weatherMorning is fog -> catches nothing, goes to the pub at 10:00, mood -15.
+3. Fergus Dram, pub owner. Base: pub all day.
+   Rule F1: if event is fair -> runs a stall on the square 10:00-16:00.
+   Rule F2: if Hamish is in the pub before 12:00 -> both get mood +10 (they chat).
+
+TALKING
+Pressing E next to an NPC shows a speech bubble with one line chosen by their mood and current weather (write 3-4 Russian lines per NPC, in a dry Highland humour). The first talk with each NPC per loop gives mood +5.
+
+JOURNAL (J)
+- Automatically logs observations whenever the player is near an NPC when one of their rules is active: "Петля 3, 9:00, дождь — Мораг дома".
+- A rule becomes "discovered" after the player has witnessed it in 2 different loops; then its journalText is shown in plain words.
+- Undiscovered rules are shown as "???" under each NPC's name.
+- The journal persists across loops (keep it in memory and also save to localStorage).
+
+LOOP RESET
+At 18:00, or when the player uses Oliver's bed, show a summary screen (weather, forecast correct or not, rules discovered today), then start a new loop at 6:00: re-roll conditions, reset positions, time and moods. Only the journal and the loop counter persist.
+
+TITLE SCREEN
+Game title "Dreich Day", 3-4 lines of Russian intro (Oliver arrives in Glen Dreich for St Brigid's Day and wakes up to the same day again), button "Начать".
+
+DO NOT ADD in this iteration: the shinty match, other villagers, Rupert, Angus, quests, sound.
+
+Code quality: one game loop with requestAnimationFrame, clear sections (config, map, state, conditions, npc engine, rules data, journal, UI, render), no console errors.

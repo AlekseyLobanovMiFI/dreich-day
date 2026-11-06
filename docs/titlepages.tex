@@ -1,0 +1,43 @@
+% \makeapproval{Наименование}{Вид документа}{Шифр ЛУ}{Шифр}
+\newcommand{\univ}{Национальный исследовательский ядерный университет «МИФИ»}
+\newcommand{\course}{Дисциплина «Генеративный искусственный интеллект: модели и приложения»}
+\newcommand{\progname}{Компьютерная игра «Dreich Day»}
+\newcommand{\makeapproval}[3]{%
+\thispagestyle{empty}
+\begin{center}\singlespacing
+\univ\\[2mm]\course
+\end{center}
+\vspace{10mm}
+\noindent\begin{minipage}[t]{0.48\textwidth}\singlespacing
+СОГЛАСОВАНО\\[2mm]Студент группы Б25-527\\[6mm]\rule{30mm}{0.4pt} А.\,И.~Лобанов\\[2mm]«\rule{8mm}{0.4pt}»\rule{30mm}{0.4pt} 2026 г.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\singlespacing\raggedleft
+УТВЕРЖДАЮ\\[2mm]Преподаватель дисциплины\\[6mm]\rule{30mm}{0.4pt} А.\,А.~Кузьмин\\[2mm]«\rule{8mm}{0.4pt}»\rule{30mm}{0.4pt} 2026 г.
+\end{minipage}
+\vfill
+\begin{center}
+{\bfseries\MakeUppercase{\progname}}\\[6mm]
+{\bfseries\MakeUppercase{#1}}\\[4mm]
+ЛИСТ УТВЕРЖДЕНИЯ\\[4mm]
+#2
+\end{center}
+\vfill
+\begin{flushright}\singlespacing
+Исполнитель:\\студент группы Б25-527\\Лобанов Алексей Игоревич
+\end{flushright}
+\vspace{10mm}
+\begin{center}Москва 2026\end{center}
+\clearpage
+\thispagestyle{empty}
+\noindent УТВЕРЖДЁН\\#2\\
+\vfill
+\begin{center}
+{\bfseries\MakeUppercase{\progname}}\\[6mm]
+{\bfseries\MakeUppercase{#1}}\\[4mm]
+#3\\[4mm]
+Листов \pageref{LastPage}
+\end{center}
+\vfill
+\begin{center}Москва 2026\end{center}
+\clearpage
+\setcounter{page}{2}}

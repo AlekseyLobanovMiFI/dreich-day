@@ -1,0 +1,9 @@
+tiles.png is uploaded to Project Assets. Replace the procedural ground drawing (grass, paths, square, water, shoreline) with this tileset, everywhere including the scenery border. Visuals only — keep all mechanics, layout, collisions, scenery objects, buildings, characters and UI unchanged. Crisp pixels, same x3 scale.
+
+TILESET (tiles.png, 64x80, 16x16 tiles, [row, col] from 0):
+- [0,0] [0,1] [0,2] grass variants, [0,3] grass with flowers — choose per tile with a fixed hash of (x, y) so the ground is varied but never changes between frames or loops; flowers ~10%.
+- [1,0] [1,1] dirt path variants (same hashing).
+- [1,2] [1,3] cobblestone variants — use for the village square around Nathair's burrow.
+- [2,0] [2,1] water animation frames — alternate every ~0.6 s.
+- [3,0..3] grass fringe overlays N, S, E, W (transparent): draw on top of a path/cobble tile on each side that touches grass.
+- [4,0..3] shore overlays N, S, E, W (transparent): draw on top of a water tile on each side that touches land.

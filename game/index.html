@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#4A4E57">
+  <link rel="icon" href="data:,">
+  <title>Dreich Day</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" aria-label="Игра Dreich Day"></canvas>
+    <div id="hud" class="hidden">
+      <div class="hud-card"><span id="weather-icon">☁</span><span id="clock">06:00</span><span id="loop-label">Петля 1</span></div>
+      <div id="task-card" class="task-card hidden"></div>
+      <div id="prompt" class="prompt hidden">E · взаимодействовать</div>
+    </div>
+    <section id="title-screen" class="screen">
+      <div class="panel title-panel"><p class="eyebrow">ГЛЕН-ДРИХ · 1 ФЕВРАЛЯ</p><h1>Dreich Day</h1><p>Оливер Оверкаст, лондонский ведущий прогноза погоды, приезжает в Хайлендс на день Святой Бригитты.</p><p>На рассвете он просыпается в «Приюте гадюки». За окном — всё тот же день. Почти.</p><p>Здесь даже погода не любит повторяться.</p><button id="start-button">Начать</button><small>WASD / стрелки — идти　 ·　 E — говорить　 ·　 J — дневник</small></div>
+    </section>
+    <section id="window-layer" class="screen hidden" aria-live="polite"></section>
+    <div id="toast" class="toast hidden"></div>
+  </main>
+</body>
+</html>
